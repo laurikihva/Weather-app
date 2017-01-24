@@ -53,8 +53,13 @@ public class weather {
         return result.toString();
     }
 
+    public static String city2() throws Exception {
+        String city = getAPI().getString("name");
+        return city;
+    }
+
     public static JSONObject getAPI() throws Exception {
-        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=tallinn&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
+        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=" + city2() + "&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
         return weather;
     }
 
@@ -67,7 +72,6 @@ public class weather {
         String speed = getAPI().getJSONObject("wind").getString("speed");
         return speed;
     }
-
 
 
     public static void main (String[] args) throws Exception {

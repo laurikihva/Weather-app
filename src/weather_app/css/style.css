@@ -1,0 +1,11 @@
+.root {
+    -fx-background-image: url("img/123.jpg");
+    -fx-background-size: cover;
+    -fx-background-color: #233; /* Default color */
+}
+.root.sunny {
+
+}
+.root.rain {
+
+}
