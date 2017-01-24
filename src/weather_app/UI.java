@@ -10,11 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
+import static java.awt.Color.*;
 import static weather_app.weather.deg;
 import static weather_app.weather.wind2;
 
@@ -34,12 +38,13 @@ public class UI extends Application {
         location.setPadding(new Insets(15, 25, 25, 25));
 
         /* Creating the scene box with measurements */
-        Scene box = new Scene(location, 350, 275);
+        Scene box = new Scene(location, 450, 275);
+        box.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         primary.setScene(box);
 
         /* Setting up action title */
-        Text topTitle = new Text("Enter Country and City:");
-        topTitle.setFont(Font.font("Calibri", FontWeight.NORMAL, 15));
+        Text topTitle = new Text("Enter the name of City:");
+        topTitle.setFont(Font.font("Calibri", FontWeight.BOLD, 15));
         location.add(topTitle, 1, 0, 2, 1);
 
         /* Text field for the Country and City */
@@ -65,8 +70,8 @@ public class UI extends Application {
                 /* Label for the city */
                 Label city = new Label();
                 String cityText = userChoice.getText();
-                city.setText(cityText + ":");
-                city.setFont(Font.font("Calibri", FontWeight.NORMAL, 25));
+                city.setText("Weather in " + cityText + ":");
+                city.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
                 location.add(city, 1, 2);
 
                 /* Main degree position */
@@ -76,7 +81,7 @@ public class UI extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                degree.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
+                degree.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
                 location.add(degree, 1, 3);
 
                 /* Wind speed */
@@ -86,7 +91,7 @@ public class UI extends Application {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                wind.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
+                wind.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
                 location.add(wind, 2, 3);
 
             }
