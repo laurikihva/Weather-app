@@ -4,39 +4,14 @@ import lib.TextIO;
 
 import org.json.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.io.*;
 import java.net.*;
 
 public class weather {
-
-    /**
-    public static String userCountry() {
-        String countryToUpperCase;
-        while (true) {
-            System.out.print("Enter Country: ");
-            countryToUpperCase = TextIO.getlnString();
-            if (countryToUpperCase.matches("[a-zA-Z]+")) {
-                break;
-            } else {
-                System.out.println("I don't think that's a country! Try again!");
-            }
-        }
-        return countryToUpperCase.substring(0, 1).toUpperCase() + countryToUpperCase.substring(1);
-    } */
-
-    public static String userCity() {
-        String cityToUpperCase;
-        while (true) {
-            System.out.print("Enter City: ");
-            cityToUpperCase = TextIO.getlnString();
-            if (cityToUpperCase.matches("[a-zA-Z]+")) {
-                break;
-            } else {
-                System.out.println("I don't think that's a city! Try again!");
-            }
-        }
-        return cityToUpperCase.substring(0, 1).toUpperCase() + cityToUpperCase.substring(1);
-    }
 
     /** Makes the API request to get String of selected city weather forecast **/
     private static String getWeatherJson(String urlToRead) throws Exception {
@@ -53,15 +28,35 @@ public class weather {
         return result.toString();
     }
 
-    public static String city2() throws Exception {
-        String city = getAPI().getString("name");
+    /** Gets the city from UI TextField */
+    private static String userCity(String fileName) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("temp.txt"));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append("\n");
+                line = br.readLine();
+            }
+            return sb.toString();
+        } finally {
+            br.close();
+        }
+    }
+
+    public static String cityW() throws Exception {
+        String city = userCity("temp.txt");
+        city = city.substring(0, city.length()-1);
         return city;
     }
 
     public static JSONObject getAPI() throws Exception {
-        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=" + city2() + "&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
+        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=" + cityW() + "&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
         return weather;
     }
+
 
     public static String deg() throws Exception {
         String name = getAPI().getJSONObject("main").getString("temp");
@@ -76,12 +71,10 @@ public class weather {
 
     public static void main (String[] args) throws Exception {
 
-        /* String country = userCountry(); */
-        String city = userCity();
 
         /* Getting city name, temperature and wind speed from JSON file **/
-        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
-
+        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=tartu&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
+        System.out.println(weather);
         /* Getting information if it's snowing, raining or clear sky **/
         JSONArray weatherArray = weather.getJSONArray("weather");
         String sky = null;
