@@ -26,8 +26,8 @@ public class UI extends Application {
         primary.setTitle("Weather Application");
         GridPane location = new GridPane();
         location.setAlignment(Pos.TOP_LEFT);
-        location.setHgap(10);
-        location.setVgap(10);
+        location.setHgap(7);
+        location.setVgap(7);
         location.setPadding(new Insets(15, 25, 25, 25));
 
         /* Creating the scene box with measurements */
@@ -40,21 +40,28 @@ public class UI extends Application {
         location.add(topTitle, 1, 0, 2, 1);
 
         /* Text field for the Country and City */
-        TextField userChoice = new TextField();
-        location.add(userChoice, 1, 1);
+        final TextField userChoice = new TextField();
+        userChoice.setPromptText("City");
+        userChoice.getText();
+        GridPane.setConstraints(userChoice, 1, 1);
+        location.getChildren().add(userChoice);
 
         /* The button to submit the choice */
         Button btn = new Button("Submit");
-        location.add(btn, 2, 1);
+        GridPane.setConstraints(btn, 2, 1);
+        location.getChildren().add(btn);
+
 
         /* Setting up the action for the button */
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                
+
                 /* Label for the city */
-                Label city = new Label("Tallinn:");
+                Label city = new Label();
+                String cityText = userChoice.getText();
+                city.setText(cityText + ":");
                 city.setFont(Font.font("Calibri", FontWeight.NORMAL, 25));
                 location.add(city, 1, 2);
 
