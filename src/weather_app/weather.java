@@ -9,7 +9,8 @@ import java.net.*;
 
 public class weather {
 
-    private static String userCountry() {
+    /**
+    public static String userCountry() {
         String countryToUpperCase;
         while (true) {
             System.out.print("Enter Country: ");
@@ -21,9 +22,9 @@ public class weather {
             }
         }
         return countryToUpperCase.substring(0, 1).toUpperCase() + countryToUpperCase.substring(1);
-    }
+    } */
 
-    private static String userCity() {
+    public static String userCity() {
         String cityToUpperCase;
         while (true) {
             System.out.print("Enter City: ");
@@ -52,16 +53,30 @@ public class weather {
         return result.toString();
     }
 
+    public static JSONObject getAPI() throws Exception {
+        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=tallinn&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
+        return weather;
+    }
+
+    public static String deg() throws Exception {
+        String name = getAPI().getJSONObject("main").getString("temp");
+        return name;
+    }
+
+    public static String wind2() throws Exception {
+        String speed = getAPI().getJSONObject("wind").getString("speed");
+        return speed;
+    }
+
+
+
     public static void main (String[] args) throws Exception {
 
-        String country = userCountry();
+        /* String country = userCountry(); */
         String city = userCity();
 
         /* Getting city name, temperature and wind speed from JSON file **/
-        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country + "&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
-        String name = weather.getString("name");
-        String temp = weather.getJSONObject("main").getString("temp");
-        String speed = weather.getJSONObject("wind").getString("speed");
+        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
 
         /* Getting information if it's snowing, raining or clear sky **/
         JSONArray weatherArray = weather.getJSONArray("weather");
@@ -70,9 +85,10 @@ public class weather {
             sky = weatherArray.getJSONObject(i).getString("main");
         }
 
+
         System.out.println("Just a sec, looking outside..");
 
-        if (!city.equals(name)) {
+        /** if (!city.equals(name)) {
             System.out.println("Sorry, I couldn't find that place!");
         } else {
             System.out.println("Well what do you know! In " + city + " it's currently " + temp + "°C with wind speed " + speed + "mps!");
@@ -91,7 +107,7 @@ public class weather {
                     System.out.println("And also the sky is clear outside!");
                     break;
             }
-        }
+        } */
 
     } // end of main
 } // end of weather
