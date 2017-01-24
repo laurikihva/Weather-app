@@ -1,6 +1,8 @@
 package weather_app;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -45,20 +47,30 @@ public class UI extends Application {
         Button btn = new Button("Submit");
         location.add(btn, 2, 1);
 
-        /* Label for the city */
-        Label city = new Label("Tallinn:");
-        city.setFont(Font.font("Calibri", FontWeight.NORMAL, 25));
-        location.add(city, 1, 2);
+        /* Setting up the action for the button */
+        btn.setOnAction(new EventHandler<ActionEvent>() {
 
-        /* Main degree position */
-        Label degree = new Label("20°C");
-        degree.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
-        location.add(degree, 1, 3);
+            @Override
+            public void handle(ActionEvent event) {
+                
+                /* Label for the city */
+                Label city = new Label("Tallinn:");
+                city.setFont(Font.font("Calibri", FontWeight.NORMAL, 25));
+                location.add(city, 1, 2);
 
-        /* Wind speed */
-        Label wind = new Label("1,3 mps");
-        wind.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
-        location.add(wind, 2, 3);
+                /* Main degree position */
+                Label degree = new Label("20°C");
+                degree.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
+                location.add(degree, 1, 3);
+
+                /* Wind speed */
+                Label wind = new Label("1,3 mps");
+                wind.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
+                location.add(wind, 2, 3);
+
+            }
+        });
+
 
         primary.show();
     }
