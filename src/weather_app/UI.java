@@ -15,9 +15,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+import static weather_app.weather.cityW;
 import static weather_app.weather.deg;
 import static weather_app.weather.wind2;
-import static weather_app.weather.*;
 
 public class UI extends Application {
 
@@ -36,8 +40,8 @@ public class UI extends Application {
         location.setPadding(new Insets(30, 25, 25, 25));
 
         /* Creating the scene box with measurements and background */
-        Scene box = new Scene(location, 450, 275);
-        box.getStylesheets().addAll(this.getClass().getResource("css/style.css").toExternalForm());
+        Scene box = new Scene(location, 500, 275);
+        box.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         primary.setScene(box);
 
         /* Setting up action title */
@@ -67,7 +71,11 @@ public class UI extends Application {
                 /* Label for the city */
                 Label city = new Label();
                 String cityText = userChoice.getText();
-
+                try (PrintStream out = new PrintStream(new FileOutputStream("temp.txt"))) {
+                    out.print(cityText);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 city.setText("Weather in " + cityText.substring(0, 1).toUpperCase() + cityText.substring(1) + ":");
                 city.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
                 location.add(city, 1, 2);
