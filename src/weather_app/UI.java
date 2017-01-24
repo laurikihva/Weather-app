@@ -15,6 +15,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static weather_app.weather.deg;
+import static weather_app.weather.wind2;
+
 public class UI extends Application {
 
     public static void main(String[] args ) {
@@ -58,6 +61,7 @@ public class UI extends Application {
             @Override
             public void handle(ActionEvent event) {
 
+
                 /* Label for the city */
                 Label city = new Label();
                 String cityText = userChoice.getText();
@@ -66,20 +70,34 @@ public class UI extends Application {
                 location.add(city, 1, 2);
 
                 /* Main degree position */
-                Label degree = new Label("20°C");
+                Label degree = new Label();
+                try {
+                    degree.setText(deg() + "°C");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 degree.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
                 location.add(degree, 1, 3);
 
                 /* Wind speed */
-                Label wind = new Label("1,3 mps");
+                Label wind = new Label();
+                try {
+                    wind.setText("Wind: " + wind2() + " mps");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 wind.setFont(Font.font("Calibri", FontWeight.NORMAL, 30));
                 location.add(wind, 2, 3);
 
             }
+
+
         });
 
 
         primary.show();
     }
+
+
 
 }
