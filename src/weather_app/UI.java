@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
+import static weather_app.weather.cityW;
 import static weather_app.weather.deg;
 import static weather_app.weather.wind2;
 
@@ -34,7 +35,7 @@ public class UI extends Application {
         location.setPadding(new Insets(30, 25, 25, 25));
 
         /* Creating the scene box with measurements and background */
-        Scene box = new Scene(location, 525, 275);
+        Scene box = new Scene(location, 600, 275);
         box.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         primary.setScene(box);
 
@@ -62,68 +63,87 @@ public class UI extends Application {
             @Override
             public void handle(ActionEvent event) {
 
-                /* Label for the city */
-                Label city = new Label();
-                String cityText = userChoice.getText();
                 try (PrintStream out = new PrintStream(new FileOutputStream("temp.txt"))) {
-                    out.print(cityText);
+                    out.print(userChoice.getText());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                city.setText("Weather in " + cityText.substring(0, 1).toUpperCase() + cityText.substring(1) + ":");
-                city.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
-                location.add(city, 1, 2);
+
+                try {
+                    if ((!userChoice.getText().equals(cityW())) && (userChoice.getText().matches("[a-zA-Z]+"))) {
+                        Label error = new Label("Sorry, couldn't find that city! Try again!");
+                        error.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
+                        location.add(error, 1, 2);
+
+                        Button clear = new Button("Clear");
+                        GridPane.setConstraints(clear, 3, 1);
+                        location.getChildren().add(clear);
+
+                        clear.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                error.setText(null);
+                            }
+                        });
+                    } else {
+                        /* Label for the city */
+                        Label city = new Label();
+                        String cityText = userChoice.getText();
+                        city.setText("Weather in " + cityText.substring(0, 1).toUpperCase() + cityText.substring(1) + ":");
+                        city.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
+                        location.add(city, 1, 2);
 
                 /* Main degree position */
-                Label degree = new Label();
-                try {
-                    degree.setText(deg() + "°C");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                degree.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
-                location.add(degree, 1, 3);
+                        Label degree = new Label();
+                        try {
+                            degree.setText(deg() + "°C");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        degree.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
+                        location.add(degree, 1, 3);
 
                 /* Wind speed */
-                Label wind = new Label();
-                try {
-                    wind.setText("Wind: " + wind2() + " mps");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                wind.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
-                location.add(wind, 2, 3);
+                        Label wind = new Label();
+                        try {
+                            wind.setText("Wind: " + wind2() + " mps");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        wind.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
+                        location.add(wind, 2, 3);
 
-                Label sky = new Label();
-                try {
-                    sky.setText(weather.sky());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                sky.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
-                location.add(sky, 1, 4);
+                        Label sky = new Label();
+                        try {
+                            sky.setText(weather.sky());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        sky.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
+                        location.add(sky, 1, 4);
 
-                /** Button to clear the weather field */
-                Button clear = new Button("Clear");
-                GridPane.setConstraints(clear, 3, 1);
-                location.getChildren().add(clear);
+                        /** Button to clear the weather field */
+                        Button clear = new Button("Clear");
+                        GridPane.setConstraints(clear, 3, 1);
+                        location.getChildren().add(clear);
 
-                clear.setOnAction(new EventHandler<ActionEvent>() {
+                        clear.setOnAction(new EventHandler<ActionEvent>() {
 
-                    @Override
-                    public void handle(ActionEvent event) {
+                            @Override
+                            public void handle(ActionEvent event) {
 
-                        city.setText(null);
-                        degree.setText(null);
-                        wind.setText(null);
-                        sky.setText(null);
+                                city.setText(null);
+                                degree.setText(null);
+                                wind.setText(null);
+                                sky.setText(null);
+                            }
+                        });
                     }
-                });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
-
-
-
         primary.show();
     }
 
