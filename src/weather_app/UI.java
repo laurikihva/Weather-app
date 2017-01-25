@@ -70,7 +70,7 @@ public class UI extends Application {
                 /* String to make equal check work */
                 String test = userChoice.getText();
                 test = test.substring(0, 1).toUpperCase() + test.substring(1);
-                
+
                 try {
                     /* Giving an error, if user enters wrong city name or it contains numbers */
                     if (!test.equals(cityA())) {

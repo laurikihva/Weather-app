@@ -98,10 +98,6 @@ public class weather {
 
     public static void main (String[] args) throws Exception {
 
-        System.out.println(getAPI());
-
-        System.out.println("Just a sec, looking outside..");
-
         /** if (!city.equals(name)) {
             System.out.println("Sorry, I couldn't find that place!");
         } else {
