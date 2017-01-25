@@ -83,7 +83,7 @@ public class weather {
     public static void main (String[] args) throws Exception {
 
         System.out.println(sky());
-        
+
         System.out.println("Just a sec, looking outside..");
 
         /** if (!city.equals(name)) {
