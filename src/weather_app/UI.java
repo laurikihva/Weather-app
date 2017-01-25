@@ -19,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-import static weather_app.weather.cityW;
 import static weather_app.weather.deg;
 import static weather_app.weather.wind2;
 
@@ -35,8 +34,8 @@ public class UI extends Application {
         primary.setTitle("Weather Application");
         GridPane location = new GridPane();
         location.setAlignment(Pos.TOP_LEFT);
-        location.setHgap(7);
-        location.setVgap(7);
+        location.setHgap(5);
+        location.setVgap(5);
         location.setPadding(new Insets(30, 25, 25, 25));
 
         /* Creating the scene box with measurements and background */
@@ -99,6 +98,15 @@ public class UI extends Application {
                 }
                 wind.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
                 location.add(wind, 2, 3);
+
+                Label sky = new Label();
+                try {
+                    sky.setText(weather.sky());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                sky.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
+                location.add(sky, 1, 4);
             }
         });
         primary.show();
