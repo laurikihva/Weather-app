@@ -1,7 +1,5 @@
 package weather_app;
 
-import lib.TextIO;
-
 import org.json.*;
 
 import java.io.BufferedReader;
@@ -46,43 +44,46 @@ public class weather {
         }
     }
 
+    /** Getting the city information from the UI TextFile */
     public static String cityW() throws Exception {
         String city = userCity("temp.txt");
         city = city.substring(0, city.length()-1);
         return city;
     }
 
+    /** Getting live weather API from the site */
     public static JSONObject getAPI() throws Exception {
         JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=" + cityW() + "&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
         return weather;
     }
 
-
+    /** Getting the degree of the chosen city */
     public static String deg() throws Exception {
         String name = getAPI().getJSONObject("main").getString("temp");
         return name;
     }
 
+    /** Information for the wind speed */
     public static String wind2() throws Exception {
         String speed = getAPI().getJSONObject("wind").getString("speed");
         return speed;
     }
 
+    /** Getting information if it's snowing, raining or clear sky */
+    public static String sky() throws Exception {
+        JSONArray weatherArray = getAPI().getJSONArray("weather");
+        String sky2 = null;
+        for (int i = 0; i < weatherArray.length(); i++) {
+            sky2 = weatherArray.getJSONObject(i).getString("main");
+        }
+        return sky2;
+    }
+
 
     public static void main (String[] args) throws Exception {
 
-
-        /* Getting city name, temperature and wind speed from JSON file **/
-        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=tartu&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
-        System.out.println(weather);
-        /* Getting information if it's snowing, raining or clear sky **/
-        JSONArray weatherArray = weather.getJSONArray("weather");
-        String sky = null;
-        for (int i = 0; i < weatherArray.length(); i++) {
-            sky = weatherArray.getJSONObject(i).getString("main");
-        }
-
-
+        System.out.println(sky());
+        
         System.out.println("Just a sec, looking outside..");
 
         /** if (!city.equals(name)) {
