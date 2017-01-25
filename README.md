@@ -1,6 +1,6 @@
 # Weather-app
 
-A simple application for weather forecast to find out the current weather information of your desired location! And it is really easy to use - just type in name of the city and tadaaa!
+A simple application for weather forecast to find out the current weather information of your desired location! And it is really easy to use - just type in name of the city, click "Submit" and tadaaa!
 
 <img src="http://oi67.tinypic.com/15n6fth.jpg"/>
 
