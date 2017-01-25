@@ -11,7 +11,9 @@ import java.net.*;
 
 public class weather {
 
-    /** Makes the API request to get String of selected city weather forecast **/
+    /** Makes the API request to get String of selected city weather forecast
+     * Got this piece of code from the internet
+     */
     private static String getWeatherJson(String urlToRead) throws Exception {
         StringBuilder result = new StringBuilder();
         URL url = new URL(urlToRead);
@@ -26,7 +28,9 @@ public class weather {
         return result.toString();
     }
 
-    /** Gets the city from UI TextField */
+    /** Gets the city from UI TextField
+     * Made it with similar approach as getWeatherJson
+     */
     private static String userCity(String nameOfFile) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("temp.txt"));
         try {
@@ -57,10 +61,22 @@ public class weather {
         return weather;
     }
 
+    /** This is to test the API
+    public static JSONObject getAPI() throws Exception {
+        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=tartu&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
+        return weather;
+    } */
+
+    /** This gets the city name as it is in the API to check the equality in UI */
+    public static String cityA() throws Exception {
+        String name = getAPI().getString("name");
+        return name;
+    }
+
     /** Getting the degree of the chosen city */
     public static String deg() throws Exception {
-        String name = getAPI().getJSONObject("main").getString("temp");
-        return name;
+        String deg = getAPI().getJSONObject("main").getString("temp");
+        return deg;
     }
 
     /** Information for the wind speed */
@@ -82,7 +98,7 @@ public class weather {
 
     public static void main (String[] args) throws Exception {
 
-        System.out.println(sky());
+        System.out.println(getAPI());
 
         System.out.println("Just a sec, looking outside..");
 
