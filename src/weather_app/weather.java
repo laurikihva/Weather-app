@@ -27,20 +27,20 @@ public class weather {
     }
 
     /** Gets the city from UI TextField */
-    private static String userCity(String fileName) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("temp.txt"));
+    private static String userCity(String nameOfFile) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader("temp.txt"));
         try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
+            StringBuilder builder = new StringBuilder();
+            String line = reader.readLine();
 
             while (line != null) {
-                sb.append(line);
-                sb.append("\n");
-                line = br.readLine();
+                builder.append(line);
+                builder.append("\n");
+                line = reader.readLine();
             }
-            return sb.toString();
+            return builder.toString();
         } finally {
-            br.close();
+            reader.close();
         }
     }
 
