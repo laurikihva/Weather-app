@@ -24,11 +24,6 @@ import static weather_app.weather.wind2;
 
 public class UI extends Application {
 
-    public static void main(String[] args ) {
-
-        launch(args);
-    }
-
     @Override
     public void start(Stage primary) {
         primary.setTitle("Weather Application");
@@ -39,7 +34,7 @@ public class UI extends Application {
         location.setPadding(new Insets(30, 25, 25, 25));
 
         /* Creating the scene box with measurements and background */
-        Scene box = new Scene(location, 500, 275);
+        Scene box = new Scene(location, 525, 275);
         box.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         primary.setScene(box);
 
@@ -107,9 +102,34 @@ public class UI extends Application {
                 }
                 sky.setFont(Font.font("Calibri", FontWeight.BOLD, 20));
                 location.add(sky, 1, 4);
+
+                /** Button to clear the weather field */
+                Button clear = new Button("Clear");
+                GridPane.setConstraints(clear, 3, 1);
+                location.getChildren().add(clear);
+
+                clear.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        city.setText(null);
+                        degree.setText(null);
+                        wind.setText(null);
+                        sky.setText(null);
+                    }
+                });
             }
         });
+
+
+
         primary.show();
+    }
+
+    public static void main(String[] args ) {
+
+        launch(args);
     }
 
 }
