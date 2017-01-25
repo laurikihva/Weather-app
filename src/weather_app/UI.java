@@ -19,9 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-import static weather_app.weather.cityW;
-import static weather_app.weather.deg;
-import static weather_app.weather.wind2;
+import static weather_app.weather.*;
 
 public class UI extends Application {
 
@@ -69,12 +67,19 @@ public class UI extends Application {
                     e.printStackTrace();
                 }
 
+                /* String to make equal check work */
+                String test = userChoice.getText();
+                test = test.substring(0, 1).toUpperCase() + test.substring(1);
+                
                 try {
-                    if ((!userChoice.getText().equals(cityW())) && (userChoice.getText().matches("[a-zA-Z]+"))) {
+                    /* Giving an error, if user enters wrong city name or it contains numbers */
+                    if (!test.equals(cityA())) {
+                        /* Error label, if wrong city name entered */
                         Label error = new Label("Sorry, couldn't find that city! Try again!");
                         error.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
                         location.add(error, 1, 2);
 
+                        /* Button to clear out error message */
                         Button clear = new Button("Clear");
                         GridPane.setConstraints(clear, 3, 1);
                         location.getChildren().add(clear);
@@ -93,7 +98,7 @@ public class UI extends Application {
                         city.setFont(Font.font("Calibri", FontWeight.BOLD, 25));
                         location.add(city, 1, 2);
 
-                /* Main degree position */
+                        /* Main degree position */
                         Label degree = new Label();
                         try {
                             degree.setText(deg() + "°C");
@@ -103,7 +108,7 @@ public class UI extends Application {
                         degree.setFont(Font.font("Calibri", FontWeight.BOLD, 30));
                         location.add(degree, 1, 3);
 
-                /* Wind speed */
+                        /* Wind speed */
                         Label wind = new Label();
                         try {
                             wind.setText("Wind: " + wind2() + " mps");
