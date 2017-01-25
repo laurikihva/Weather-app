@@ -85,6 +85,7 @@ public class UI extends Application {
                         location.getChildren().add(clear);
 
                         clear.setOnAction(new EventHandler<ActionEvent>() {
+
                             @Override
                             public void handle(ActionEvent event) {
 
