@@ -61,12 +61,6 @@ public class weather {
         return weather;
     }
 
-    /** This is to test the API
-    public static JSONObject getAPI() throws Exception {
-        JSONObject weather = new JSONObject(getWeatherJson("http://api.openweathermap.org/data/2.5/weather?q=tartu&units=metric&appid=3932495ab0dbe0868e6e779aa88af671"));
-        return weather;
-    } */
-
     /** This gets the city name as it is in the API to check the equality in UI */
     public static String cityA() throws Exception {
         String name = getAPI().getString("name");
@@ -95,29 +89,7 @@ public class weather {
         return sky2;
     }
 
-
     public static void main (String[] args) throws Exception {
-
-        /** if (!city.equals(name)) {
-            System.out.println("Sorry, I couldn't find that place!");
-        } else {
-            System.out.println("Well what do you know! In " + city + " it's currently " + temp + "°C with wind speed " + speed + "mps!");
-            assert sky != null;
-            switch (sky) {
-                case "Snow":
-                    System.out.println("And it's also snowy outside!");
-                    break;
-                case "Rain":
-                    System.out.println("And it's also raining outside!");
-                    break;
-                case "Cloud":
-                    System.out.println("And it's also cloudy outside!");
-                    break;
-                default:
-                    System.out.println("And also the sky is clear outside!");
-                    break;
-            }
-        } */
 
     } // end of main
 } // end of weather
